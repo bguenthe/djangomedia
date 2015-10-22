@@ -1,0 +1,11 @@
+<h1>MediaList</h1>
+<table border="1">
+<tbody>
+{% for d in li %}
+    <tr class="{% cycle 'odd' 'even' %}">
+    <td>{{d.autor}}</td>
+    <td>{{d.title}}</td>
+    </tr>
+{% endfor %}
+</tbody>
+</table>
