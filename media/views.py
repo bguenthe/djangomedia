@@ -5,6 +5,7 @@ from django.template import RequestContext, loader
 import json
 import psycopg2
 import django_tables2 as tables
+import spotipy
 
 class NameTable(tables.Table):
     id = tables.Column()
@@ -56,3 +57,15 @@ def getallmedia_dt2(request):
     table = NameTable(data)
     table.paginate(page=request.GET.get('page', 1), per_page=25)
     return render(request, "media/getallmedia_dt2.html", {"media": table})
+
+
+def getspotify(request):
+    scope = 'user-library-read'
+    token = spotipy.util.prompt_for_user_token("bernd.stuebe@gmail.com", scope, "7644fa55dadc474d81ab5062c79535f7", "05c25aa91fb744c599c507cc2dcd5d9c")
+
+    spotify = spotipy.Spotify(auth=token)
+
+    results = spotify.current_user_followed_artists(limit=20, after=None)
+
+    return render(request, "media/getallmedia_dt2.html", {"media": table})
+
